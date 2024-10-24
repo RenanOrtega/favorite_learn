@@ -53,9 +53,10 @@ class MyAppState extends ChangeNotifier {
   }
 
   void removeFavorite(WordPair pair) {
-    if (favorites.contains(current)) {
-      favorites.remove(current);
+    if (favorites.contains(pair)) {
+      favorites.remove(pair);
     }
+    notifyListeners();
   }
 }
 
@@ -111,10 +112,10 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                     ],
                     currentIndex: selectedIndex,
-                    onTap: (value) => {
+                    onTap: (value) {
                       setState(() {
                         selectedIndex = value;
-                      })
+                      });
                     },
                   ),
                 )
@@ -137,10 +138,10 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                     ],
                     selectedIndex: selectedIndex,
-                    onDestinationSelected: (value) => {
+                    onDestinationSelected: (value) {
                       setState(() {
                         selectedIndex = value;
-                      })
+                      });
                     },
                   ),
                 ),
@@ -232,10 +233,7 @@ class FavoritesPage extends StatelessWidget {
               for (WordPair pair in appState.favorites)
                 ListTile(
                   leading: IconButton(
-                    icon: Icon(
-                      Icons.delete,
-                      semanticLabel: 'Delete',
-                    ),
+                    icon: Icon(Icons.delete, semanticLabel: 'Delete'),
                     color: theme.colorScheme.primary,
                     tooltip: 'Remove from favorite.',
                     onPressed: () {
@@ -246,7 +244,7 @@ class FavoritesPage extends StatelessWidget {
                     pair.asLowerCase,
                     semanticsLabel: pair.asPascalCase,
                   ),
-                )
+                ),
             ],
           ),
         )
